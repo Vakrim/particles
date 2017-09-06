@@ -9,8 +9,8 @@ export default class Connection {
     this.b = b;
     this.k = 50;
     this.rotK = 10;
-    this.A2BAngle = Math.atan2(b.x - a.x, b.y - a.y) - this.a.angle;
-    this.B2AAngle = Math.atan2(a.x - b.x, a.y - b.y) - this.b.angle;
+    this.A2BAngle = Math.atan2(b.x - a.x, -(b.y - a.y)) - this.a.angle;
+    this.B2AAngle = Math.atan2(a.x - b.x, -(a.y - b.y)) - this.b.angle;
     connections.push(this);
   }
 
@@ -28,7 +28,9 @@ export default class Connection {
     const distance =
       ((this.a.x - this.b.x) ** 2 + (this.a.y - this.b.y) ** 2) ** 0.5;
     const currentA2BDiff = normalizeAngle(
-      this.A2BAngle - Math.atan2(this.b.x - this.a.x, this.b.y - this.a.y) + this.a.angle
+      this.A2BAngle -
+        Math.atan2(this.b.x - this.a.x, -(this.b.y - this.a.y)) +
+        this.a.angle
     );
     this.id == 0 && console.log(currentA2BDiff);
     this.a.applyTorque(currentA2BDiff * this.rotK, t);
@@ -39,7 +41,9 @@ export default class Connection {
     );
 
     const currentB2ADiff = normalizeAngle(
-      this.B2AAngle - Math.atan2(this.a.x - this.b.x, this.a.y - this.b.y) + this.b.angle
+      this.B2AAngle -
+        Math.atan2(this.a.x - this.b.x, -(this.a.y - this.b.y)) +
+        this.b.angle
     );
     this.b.applyTorque(currentB2ADiff * this.rotK, t);
     this.a.applyForce(
