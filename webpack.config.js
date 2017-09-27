@@ -1,5 +1,6 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
 
 var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
@@ -39,6 +40,11 @@ module.exports = {
         loader: ExtractTextPlugin.extract('css!sass')
       }
     ]
+  },
+  resolve: {
+    alias: {
+      app: path.resolve(__dirname, 'app/'),
+    }
   },
   plugins: [HtmlWebpackPluginConfig, ExtractTextPluginConfig]
 }
